@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import * as C from './styles';
 import { Item } from '../../types/item';
+import mysql from 'mysql2/promise';
 
 import { categories } from '../../data/categories';
 
@@ -15,8 +16,47 @@ export const InputArea = ({ onAdd }: Props) => {
   const [valueField, setValueField] = useState(0);
 
   let categoryKeys: string[] = Object.keys(categories);
+  const handleAdd = async (item: Item) => {
+    let errors: string[] = [];
 
+    if (isNaN(new Date(item.date).getTime())) {
+      errors.push('Data Error!');
+    }
+    if (!categoryKeys.includes(item.category)) {
+      errors.push('Category Error!');
+    }
+    if (item.title === '') {
+      errors.push('Title Error!');
+    }
+    if (item.value <= 0) {
+      errors.push('Value Error!');
+    }
+
+    if (errors.length > 0) {
+      alert(errors.join('\n'));
+    } else {
+      try {
+        const connection = await mysql.createConnection({
+          host: 'localhost',
+          user: 'Joe',
+          password: 'passwd',
+          database: 'zlotoweczka',
+        });
+        await connection.execute(
+            'INSERT INTO items (date, category, title, value) VALUES (?, ?, ?, ?)',
+            [item.date, item.category, item.title, item.value]
+        );
+        connection.end();
+        alert('Item added successfully!');
+      } catch (error) {
+        console.error(error);
+        alert('Error adding item!');
+      }
+      clearFields();
+    }
+  };
   const handleAddEvent = () => {
+
     let errors: string[] = [];
 
     if(isNaN(new Date(dateField).getTime())) {
@@ -40,7 +80,7 @@ export const InputArea = ({ onAdd }: Props) => {
         category: categoryField,
         title: titleField,
         value: valueField
-      });
+      } as Item);
       clearFields();
     }
   }
@@ -79,7 +119,7 @@ export const InputArea = ({ onAdd }: Props) => {
         </C.InputLabel>
         <C.InputLabel>
           <C.InputTitle>&nbsp;</C.InputTitle>
-          <C.Button onClick={handleAddEvent}>Dodaj</C.Button>
+          <C.Button onClick={handleAdd}>Dodaj</C.Button>
         </C.InputLabel>
       </C.Container>
   );

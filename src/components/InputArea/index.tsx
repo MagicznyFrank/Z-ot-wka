@@ -5,6 +5,20 @@ import mysql from 'mysql2/promise';
 
 import { categories } from '../../data/categories';
 
+  const connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'Joe',
+    password: 'passwd',
+    database: 'zlotoweczka',
+  });
+  try {
+    await connection.connect();
+    console.log('Connection to database is established!');
+  } catch (err) {
+    console.error('Error connecting to database: ', err);
+  }
+
+
 type Props = {
   onAdd: (item: Item) => void;
 };
@@ -16,44 +30,41 @@ export const InputArea = ({ onAdd }: Props) => {
   const [valueField, setValueField] = useState(0);
 
   let categoryKeys: string[] = Object.keys(categories);
-  const handleAdd = async (item: Item) => {
+  const handleAddEvent2 = async () => {
     let errors: string[] = [];
 
-    if (isNaN(new Date(item.date).getTime())) {
+    if(isNaN(new Date(dateField).getTime())) {
       errors.push('Data Error!');
     }
-    if (!categoryKeys.includes(item.category)) {
+    if(!categoryKeys.includes(categoryField)) {
       errors.push('Category Error!');
     }
-    if (item.title === '') {
+    if(titleField === '') {
       errors.push('Title Error!');
     }
-    if (item.value <= 0) {
+    if(valueField <= 0) {
       errors.push('Value Error!');
     }
-
     if (errors.length > 0) {
-      alert(errors.join('\n'));
+      alert(errors.join("\n"));
     } else {
-      try {
-        const connection = await mysql.createConnection({
-          host: 'localhost',
-          user: 'Joe',
-          password: 'passwd',
-          database: 'zlotoweczka',
-        });
-        await connection.execute(
-            'INSERT INTO items (date, category, title, value) VALUES (?, ?, ?, ?)',
-            [item.date, item.category, item.title, item.value]
-        );
-        connection.end();
-        alert('Item added successfully!');
-      } catch (error) {
-        console.error(error);
-        alert('Error adding item!');
-      }
+      // Insert the new item into the database
+      //const [rows] = await connection.execute(
+        //  'INSERT INTO items (date, category, title, value) VALUES (?, ?, ?, ?)',
+        //  [new Date(dateField), categoryField, titleField, valueField]
+      //);
+      // Call the onAdd callback
+      onAdd({
+        date: new Date(dateField),
+        category: categoryField,
+        title: titleField,
+        value: valueField,
+      } as Item);
+      // Clear the input fields
       clearFields();
+      //await connection.end();
     }
+    //await connection.end();
   };
   const handleAddEvent = () => {
 
@@ -119,7 +130,7 @@ export const InputArea = ({ onAdd }: Props) => {
         </C.InputLabel>
         <C.InputLabel>
           <C.InputTitle>&nbsp;</C.InputTitle>
-          <C.Button onClick={handleAdd}>Dodaj</C.Button>
+          <C.Button onClick={handleAddEvent}>Dodaj</C.Button>
         </C.InputLabel>
       </C.Container>
   );

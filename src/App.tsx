@@ -48,15 +48,6 @@ const App = () => {
     setList(newList);
   }
 
-// create a connection and log a message on successful connection
-    const connection = createConnection();
-    connection.connect((err) => {
-        if (err) {
-            console.error("Error connecting to database:", err);
-            return;
-        }
-        console.log("Connected to database.");
-    });
 
 
     return (

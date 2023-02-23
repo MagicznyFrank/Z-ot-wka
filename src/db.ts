@@ -16,4 +16,3 @@ connection.connect((err) => {
 });
 
 export { connection, mysql };
-

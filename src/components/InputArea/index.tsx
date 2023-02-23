@@ -1,20 +1,21 @@
 import { useState } from 'react';
 import * as C from './styles';
 import { Item } from '../../types/item';
-import mysql from 'mysql2/promise';
-
 import { categories } from '../../data/categories';
 
-  const mysql = require('mysql')
-  const connection = await mysql.createConnection({
-    host: 'localhost',
-    user: 'Joe',
-    password: 'passwd',
-    database: 'zlotoweczka',
-  });
-  connection.connect();
+const mysql = require('mysql')
+const connection = await mysql.createConnection({
+  host: 'localhost',
+  user: 'Joe',
+  password: 'passwd',
+  database: 'zlotoweczka',
+});
+connection.connect();
+connection.query();{
 
-  connection.end()
+  console.log('connected');
+}
+connection.end()
 
 
 type Props = {

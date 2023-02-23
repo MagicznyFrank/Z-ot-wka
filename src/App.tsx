@@ -15,9 +15,11 @@ const App = () => {
   const [currentMonth, setCurrentMonth] = useState(getCurrentMonth());
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
-  
-  
-  useEffect(()=> {
+
+
+
+
+    useEffect(()=> {
     setFilteredList( filterListByMonth(list, currentMonth) );
   }, [list, currentMonth]);
 

@@ -3,19 +3,6 @@ import * as C from './styles';
 import { Item } from '../../types/item';
 import { categories } from '../../data/categories';
 
-const mysql = require('mysql')
-const connection = await mysql.createConnection({
-  host: 'localhost',
-  user: 'Joe',
-  password: 'passwd',
-  database: 'zlotoweczka',
-});
-connection.connect();
-connection.query();{
-
-  console.log('connected');
-}
-connection.end()
 
 
 type Props = {

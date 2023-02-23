@@ -8,7 +8,7 @@ import { getCurrentMonth, filterListByMonth } from './helpers/dateFilter';
 import { TableArea } from './components/TableArea';
 import { InfoArea } from './components/InfoArea';
 import { InputArea } from './components/InputArea';
-
+import { connection } from './db';
 const App = () => {  
   const [list, setList] = useState(items);
   const [filteredList, setFilteredList] = useState<Item[]>([]);
@@ -48,7 +48,18 @@ const App = () => {
     setList(newList);
   }
 
-  return (
+// create a connection and log a message on successful connection
+    const connection = createConnection();
+    connection.connect((err) => {
+        if (err) {
+            console.error("Error connecting to database:", err);
+            return;
+        }
+        console.log("Connected to database.");
+    });
+
+
+    return (
     <C.Container>
       <C.Header>
         <C.HeaderText>Złotóweczka</C.HeaderText>

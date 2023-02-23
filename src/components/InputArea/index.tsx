@@ -5,18 +5,16 @@ import mysql from 'mysql2/promise';
 
 import { categories } from '../../data/categories';
 
+  const mysql = require('mysql')
   const connection = await mysql.createConnection({
     host: 'localhost',
     user: 'Joe',
     password: 'passwd',
     database: 'zlotoweczka',
   });
-  try {
-    await connection.connect();
-    console.log('Connection to database is established!');
-  } catch (err) {
-    console.error('Error connecting to database: ', err);
-  }
+  connection.connect();
+
+  connection.end()
 
 
 type Props = {

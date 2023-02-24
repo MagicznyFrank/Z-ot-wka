@@ -2,11 +2,12 @@ import styled from "styled-components";
 
 export const Table = styled.table`
     width: 100%;
-    background-color: black;
+    background-color: #ABD6DFFF;
     padding: 20px;
     border-radius: 10px;
     margin-top: 20px;
     color: white;
+  box-shadow: -2px -2px 0 grey, 2px -2px 0 grey, -2px 2px 0 grey, 2px 2px 0 grey;
 `;
 
 export const TableHeadColumn = styled.th<{width?: number}>`

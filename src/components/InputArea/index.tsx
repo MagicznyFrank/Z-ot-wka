@@ -16,42 +16,7 @@ export const InputArea = ({ onAdd }: Props) => {
   const [valueField, setValueField] = useState(0);
 
   let categoryKeys: string[] = Object.keys(categories);
-  const handleAddEvent2 = async () => {
-    let errors: string[] = [];
 
-    if(isNaN(new Date(dateField).getTime())) {
-      errors.push('Data Error!');
-    }
-    if(!categoryKeys.includes(categoryField)) {
-      errors.push('Category Error!');
-    }
-    if(titleField === '') {
-      errors.push('Title Error!');
-    }
-    if(valueField <= 0) {
-      errors.push('Value Error!');
-    }
-    if (errors.length > 0) {
-      alert(errors.join("\n"));
-    } else {
-      // Insert the new item into the database
-      //const [rows] = await connection.execute(
-        //  'INSERT INTO items (date, category, title, value) VALUES (?, ?, ?, ?)',
-        //  [new Date(dateField), categoryField, titleField, valueField]
-      //);
-      // Call the onAdd callback
-      onAdd({
-        date: new Date(dateField),
-        category: categoryField,
-        title: titleField,
-        value: valueField,
-      } as Item);
-      // Clear the input fields
-      clearFields();
-      //await connection.end();
-    }
-    //await connection.end();
-  };
   const handleAddEvent = () => {
 
     let errors: string[] = [];

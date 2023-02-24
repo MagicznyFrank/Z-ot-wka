@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    background-color: black;
+    //background-color: #E7EbE0FF;
+    background-color: #ABD6DFFF;
     border-radius: 10px;
     padding: 20px;
     margin-top: 20px;
     display: flex;
     align-items: center;
     color: white;
+  box-shadow: -2px -2px 0 grey, 2px -2px 0 grey, -2px 2px 0 grey, 2px 2px 0 grey;
 `;
 export const InputLabel = styled.label`
     flex: 1;
@@ -33,6 +35,7 @@ export const Select = styled.select`
     padding: 0 5px;
     border: 1px solid lightblue;
     border-radius: 5px;
+    background: white;
      
     &:focus  {
         outline: none;
